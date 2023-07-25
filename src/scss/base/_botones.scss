@@ -1,0 +1,25 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+.boton{
+    margin: 1rem 0 1rem 0;
+}
+.boton-amarillo {
+    @include m.boton(v.$amarillo, inline-block);
+}
+
+.boton-amarillo-block {
+    @include m.boton(v.$amarillo, block);
+}
+
+.boton-azul {
+    @include m.boton(v.$azul, inline-block);
+}
+
+.boton-rojo-block{
+    @include m.boton(v.$rojo, block);
+    width: 100%
+}
+
+.boton-azul-block {
+    @include m.boton(v.$azul, block);
+}

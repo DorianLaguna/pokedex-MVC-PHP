@@ -1,0 +1,11 @@
+@use 'base/variables' as v;
+
+.ventana-error{
+    background-color: v.$rojo;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    h2, p{
+        margin: 1rem;
+    }
+}

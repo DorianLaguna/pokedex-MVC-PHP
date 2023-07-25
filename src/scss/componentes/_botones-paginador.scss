@@ -1,0 +1,23 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.botones-paginador{
+    padding: 1rem;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    button{
+        
+        background-color: v.$grisOscuro;
+        color: v.$blanco;
+        &:hover{
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+        transition: ease-out;
+    }
+    &:last-child{
+        padding-bottom: 1rem;
+    }
+}

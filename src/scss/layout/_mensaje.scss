@@ -1,0 +1,19 @@
+@use 'base/variables' as v;
+
+.contenedor-mensaje{
+    background-color: v.$gris;
+    padding: 1rem;
+    min-height: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    padding-bottom: 10 rem;
+    color: v.$negro;
+    border-radius: 2rem;
+    box-shadow: 0 2rem 1rem;
+    h2{
+        font-size: 3rem;
+    }
+}

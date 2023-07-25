@@ -1,0 +1,53 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.estadisticas{
+    padding-top: 2rem;
+    margin: 0 auto;
+    color: v.$negro;
+    max-width: 80rem;
+    padding: 3rem 3rem 5rem;
+    background-color: v.$gris;
+    box-shadow: 0 8px 9px v.$negro;
+    border-radius: .5rem;
+    h2{
+        text-align: center;
+        margin: 1rem 0;
+    }
+}
+.stats:not(:last-child){
+    margin-bottom: 3rem;
+}
+.detalles{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.barra{
+    position: relative;
+    width: 100%;
+    height: 20px;
+    border: 1px;
+    border: 1px solid v.$azul;
+    border-radius: 2rem;
+
+    div{
+        position: relative;
+        width: 0;
+        height: 8px;
+        border-radius: 1rem;
+        background-color: v.$azul;
+    }
+}
+//Animacion con scss
+#hp-barra{
+    height: 100%;
+    width: 0;
+    background-color: v.$azul;
+}
+#barra{
+    height: 100%;
+    width: 0%;
+    background-color: v.$azul;
+}

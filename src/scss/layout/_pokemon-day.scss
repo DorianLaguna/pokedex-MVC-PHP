@@ -1,0 +1,58 @@
+@use 'base/variables' as v;
+
+.parte-superior{
+    max-width: 90rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contenedor-pokemon_day{
+    background-color: darken(v.$azul, 10);
+    max-width: 80rem;
+    margin: 2rem auto;
+    box-shadow: 0px 4px 8px v.$negro;
+    padding-bottom: 1rem;
+    border-radius: 1rem;
+    h4{
+        margin: 0;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+        font-size: 2.4rem;
+    }
+}
+#name{
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: v.$bold;
+    margin-left: 2rem;
+}
+.contenedor-info{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    
+    p{
+        margin: 1rem 2rem;
+    }
+}
+.imagen{
+    display: block;
+    margin: 0 auto;
+    transform: scale(2) translateY(12%);
+    img{
+        margin-top: 2rem;
+    }
+}
+.type-pokemon{
+    margin: 0;
+    margin-left: 2rem;
+    text-transform: uppercase;
+}
+.contenedor{
+    max-width: 80rem;
+}
+.contenedor-acciones{
+    display: flex;
+    justify-content:flex-end;
+    min-width: 100%;
+}

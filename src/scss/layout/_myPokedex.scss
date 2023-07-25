@@ -1,0 +1,178 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.Mis{
+    h4{
+        margin: 1rem auto;
+        text-align: center;
+        color: v.$grisOscuro;
+    }
+}
+
+//favorito
+.contenedor-favorito{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin-bottom: 2rem;
+    p{
+        font-size: 1.2rem;
+
+        @include m.tablet{
+            font-size: 1.8rem;
+        }
+    }
+}
+.my-favorite{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: v.$rojo;
+    width: 80%;
+    margin-left: auto;
+    border-radius: 1rem 0 0 1rem;
+    box-shadow: .4rem 1rem 1rem v.$negro;
+    z-index: 100;
+
+    
+
+    p{
+        text-transform: capitalize;
+        margin-bottom: 0;
+    }
+}
+.habilidades{
+    p:first-child{
+        text-align: center;
+    }
+    p{
+        margin-left: 1rem;
+        text-transform: capitalize;
+    }
+    background-color: darken(v.$azul, 15);
+    width: 80%;
+    margin-right: auto;
+    padding-left: 1rem;
+    border-radius: 0 1rem 1rem 0;
+    box-shadow: 0 1rem 1rem v.$negro;
+
+}
+
+
+//Equipo
+.contenedor-grupos-pokedex{
+    background-color: v.$rojo;
+    border-radius: 1rem;
+    
+    h3{
+        margin: 0;
+        padding-top: .3rem;
+    }
+}
+.only-pokemones{
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    box-shadow: 0 1rem 1rem v.$negro;
+    background-color: darken(v.$azul, 10);
+    border-radius: 1rem;
+
+    @include m.telefono{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @include m.tablet{
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @include m.desktop{
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+.pokemon-equipo{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: v.$gris;
+    margin: 1rem;
+    border-radius: 1rem;
+    .nombre-pokemon-equipo{
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: 0;
+    }
+    
+}
+.without-pokemon{
+    width: 70%;
+    height: 70%;
+    margin-top: 2rem;
+        svg{
+        height: 100%;
+        width: 100%;
+        }
+}
+.acciones-pokedex{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    form{
+        margin: 0;
+    width: 100%;
+    }
+    button{
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        font-size: .8rem;
+        padding-bottom: 0;
+        background-color: v.$rojo;
+        border-radius: .5rem;
+        outline: none;
+        border: .5px solid v.$negro;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+.contenedor-acciones-pokedex{
+    margin: 0;
+    padding: .5rem;
+    padding-top: 0;
+}
+.no-pokemon{
+    height: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        font-size: 2.4rem;
+    }
+}
+.titulo-equipo{
+    .nombre-equipo{
+        margin-top: 1rem;
+    }
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.boton-editar-nombre{
+    background-color: transparent;
+    border: 0;
+    margin-top: 1rem;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.cambio-nombre{
+    @include m.desktop{
+        display: flex;
+        justify-content: center;
+        align-items:flex-start;
+        form{
+            margin-top: 4rem;
+        }
+    }
+}
