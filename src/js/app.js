@@ -129,15 +129,25 @@ function menu(){
     //muestra el menu
     const boton = document.querySelector('.item-nav');
     const navLista = document.querySelector('.enlaces-nav');
-    boton.addEventListener('click', function (){
+    const contenedor = document.querySelector('.fondo-cierra');
+    boton.addEventListener('click', function (){ 
         navLista.classList.toggle('oculta');
+        contenedor.classList.remove('oculta');
     })
 
     //cierra el menu
     const botonCierra = document.querySelector('.cerrar');
     botonCierra.addEventListener('click', function(){
         navLista.classList.add('oculta');
-    })    
+        contenedor.classList.add('oculta')
+    })
+    contenedor.addEventListener('click', function(){
+        contenedor.classList.add('oculta')
+        navLista.classList.add('oculta');
+    })
+    navLista.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
 }
 
 function busqueda(){
