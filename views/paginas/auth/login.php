@@ -16,7 +16,7 @@
                 <input type="password" placeholder="Your password" name="password" require>
             </div>
 
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" class="boton-send">
     
         </form>
     </div>
@@ -26,6 +26,6 @@
 <section class="contenedor">
             <div class="contenedor-log-in">
                 <a href="./create">I need an account</a>
-                <a href="">I forgot my password</a>
+                <a href="./password">I forgot my password</a>
             </div>
 </section>

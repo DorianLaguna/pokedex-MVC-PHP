@@ -13,7 +13,7 @@
     align-items: center;
 }
 .formulario{
-    min-height: 30rem;
+    min-height: 20rem;
     width: 100%;
     background-color: v.$blanco;
     padding: 1rem;
@@ -48,4 +48,10 @@
             margin-right: .5rem;
         }
     }
+}
+.boton-send{
+    background-color: lighten(v.$rojo, 15);
+    padding: .5rem;
+    margin-left: 1rem;
+    border-radius: 1rem;
 }

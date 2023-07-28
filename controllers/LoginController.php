@@ -124,6 +124,14 @@ class LoginController extends ActiveRecord{
         ]);
     }
 
+    public static function password(Router $router){
+        $alertas = [];
+
+        $router->render('paginas/auth/password',[
+            'alertas' => $alertas
+        ]);
+    }
+
     public static  function logout(){
         $_SESSION = [];
 

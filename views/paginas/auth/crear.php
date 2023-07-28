@@ -24,13 +24,13 @@
                 </div>
         
         
-                <input type="submit" value="Create" class="boton">
+                <input type="submit" value="Create" class="boton-send">
             </form>
     </div>
 </section>
 <section class="contenedor">
             <div class="contenedor-log-in">
                 <a href="./login">I have account</a>
-                <a href="">I forgot my password</a>
+                <a href="./password">I forgot my password</a>
             </div>
 </section>
