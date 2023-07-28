@@ -184,16 +184,22 @@ function busqueda(){
 function oculta(){
     //agrega o quita la barra de navegacion
     const navLista = document.querySelector('.enlaces-nav');
+    const fondo = document.querySelector('.sel');
 
     if(window.innerWidth < 1024){
         navLista.classList.add('oculta');
+        fondo.classList.add('fondo-cierra');
+        fondo.classList.add('oculta')
+
     }else{
         navLista.classList.remove('oculta');
+        fondo.classList.remove('fondo-cierra');
+        fondo.classList.remove('oculta')
     }
 }
 function eventosBoton(event){
     //muestra el overlay  
-    const overlay = document. querySelector('.overlay');
+    const overlay = document.querySelector('.overlay');
     event.preventDefault();
     overlay.classList.remove('oculta');
 }

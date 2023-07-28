@@ -40,7 +40,7 @@
         </div>
 
         <!-- Menu -->
-        <div class="fondo-cierra oculta">
+        <div class="fondo-cierra oculta sel">
             <div class="enlaces-nav">
                 <button class="cerrar">X</button>
                 <a href="/myPokedex">My Pokedex</a>
@@ -70,7 +70,7 @@
                 <?php endif; ?>
             </div>
 
-        </div>
+        <!-- </div> -->
 
         
         
