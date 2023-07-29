@@ -21,7 +21,9 @@
     border-radius: 2rem;
     box-shadow: 0 1rem 1rem;
     max-width: 60rem;
-    
+    .description-form{
+        text-align: center;
+    }
 }
 
 .entrada-formulario{
@@ -54,4 +56,10 @@
     padding: .5rem;
     margin-left: 1rem;
     border-radius: 1rem;
+    &:hover{
+        cursor: pointer;
+    }
+}
+.description-form{
+    margin: 1rem;
 }

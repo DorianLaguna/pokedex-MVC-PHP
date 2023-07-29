@@ -1,16 +1,18 @@
 <section class="contenedor">
-    <h2>Change password</h2>
+    <h2>New password</h2>
     
     <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+
+    <?php if($allow) : ?>
     
     <div class="contenedor-formulario">
         <form method="POST" class="formulario">
 
-            <p class="description-form">Write your email to send you instructions to change your password</p>
+            <p class="description-form">Write your new password</p>
             
             <div class="entrada-formulario">
-                <label for="email">Email: </label>
-                <input id="email" type="email" placeholder="Your email" name="correo" value="<?php $correo ?>" required>
+                <label for="email">New password: </label>
+                <input id="email" type="password" placeholder="Your new password" name="password" value="<?php $correo ?>" required>
             </div>
 
             <input type="submit" value="Send" class="boton-send">
@@ -18,10 +20,13 @@
         </form>
     </div>
 
-
+    <?php endif; ?>
 </section>
 <section class="contenedor">
+    <?php if(!$allow) : ?>
             <div class="contenedor-log-in">
-                <a href="./create">I need an account</a>
+                <a href="./create">Create account</a>
+                <a href="./login">Login</a>
             </div>
+    <?php endif; ?>
 </section>

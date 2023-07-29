@@ -34,6 +34,9 @@ $router->post('/create', [LoginController::class, 'create']);
 $router->get('/password', [LoginController::class, 'password']);
 $router->post('/password', [LoginController::class, 'password']);
 
+$router->get('/change', [LoginController::class, 'changePassword']);
+$router->post('/change', [LoginController::class, 'changePassword']);
+
 $router->get('/confirmar', [LoginController::class, 'confirmar']);
 
 $router->get('/mensaje', [LoginController::class, 'mensaje']);

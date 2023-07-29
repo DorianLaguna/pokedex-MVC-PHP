@@ -126,9 +126,61 @@ class LoginController extends ActiveRecord{
 
     public static function password(Router $router){
         $alertas = [];
+        $correo = '';
+
+        if($_SERVER['REQUEST_METHOD']){
+            $correo = $_POST['correo'];
+            $usuario = Usuario::where('correo', $correo);
+            
+            if(!empty($usuario)){
+                $usuario->crearToken();
+                $respuesta = $usuario->guardar();
+                if($respuesta){
+                    $email = new Email($usuario->nombre,$usuario->correo, $usuario->token);
+                    $email->cambiarPassword();
+                    $alertas['exito'][] = 'Check your email. We sent instructions to change your password';
+                }
+            }else{
+                $alertas['error'][] = 'No user with that email found';
+            }
+        }
 
         $router->render('paginas/auth/password',[
-            'alertas' => $alertas
+            'alertas' => $alertas,
+            'correo' => $correo
+        ]);
+    }
+
+    public static function changePassword(Router $router){
+        $alertas = [];
+        $token = $_GET['token'];
+        $respuesta = Usuario::where('token', $token);
+        $allow = true;
+        
+        if(!$respuesta){
+            $allow = false;
+            $alertas['error'][] = 'Token Invalid';
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $password = $_POST['password'];
+            if(strlen($password)<6){
+                $alertas['error'][] = 'Password must be longer than 6 characters';
+            }else{
+                $respuesta->password = $password;
+                $respuesta->hashPassword();
+                $respuesta->token = '';
+                $resultado = $respuesta->guardar();
+                if($resultado){
+                    $alertas['exito'][] = 'Password has been changed';
+                    $allow = false;
+                }
+            }
+        }
+
+        $router->render('paginas/auth/changePassword', [
+            'alertas' => $alertas,
+            'allow' => $allow
         ]);
     }
 
