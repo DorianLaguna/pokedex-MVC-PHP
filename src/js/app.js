@@ -44,7 +44,6 @@ async function consultarAPI(){
     if(!id){
         id = numRandom = generarNumeroAleatorio(1, 1010);
     }
-    // console.log(id);
 
     try {
         //Consulta el pokemon a mostrar por cada dia
@@ -54,7 +53,6 @@ async function consultarAPI(){
         muestraPokemon(pokemon);
         muestraEstadisticas(pokemon);
         pokemonId = pokemon.id;
-        // console.log(pokemonId)
         //coloca el id a los botones de acciones
         botonId(pokemonId);
         
@@ -110,8 +108,6 @@ function muestraEstadisticas(pokemon){
     const {stats} = pokemon;
     const divCant = document.querySelectorAll('#cantidad');
     const barra = document.querySelectorAll('#barra');
-
-    // console.log(barra);
 
     i= 0;
 
@@ -232,7 +228,6 @@ function botonId(id){
 
     //agrega valor del id a los botones de accion
     const boton = document.querySelectorAll('.boton-valor');
-    // console.log(boton)
     
     boton.forEach(element => {
         element.value = id;
@@ -300,7 +295,6 @@ async function ApiGrupos(){
 
     } catch (error) {
         console.log(error);
-        // sinGrupos();
     }
 
     
@@ -308,7 +302,6 @@ async function ApiGrupos(){
 }
 
 async function mostrarGrupos(grupos) {
-    // console.log(grupos);
 
     try {
         gruponumero = 1;
@@ -412,7 +405,6 @@ async function favorito(){
 
     const habilidades = contenedor.querySelector('.habilidades');
     numeroHabilidades = pokemon.abilities;
-    // console.log(numeroHabilidades);
 
     numeroHabilidades.forEach(habilidad => {
         const nombreHabilidad = document.createElement('P');
@@ -533,18 +525,14 @@ async function consultarListaToApi(){
     const tipo = document.querySelector('#tipo-pokemon').value
     const generacion = document.querySelector('#generacion').value
     const orden = document.querySelector('#order').value
-    
-    let url;
-    //crear url dependiendo valores
+
     if(tipo === '' && generacion === ''){
         mainList(orden);
     }else if(tipo === '' && generacion !== ''){
-        url = 'https://pokeapi.co/api/v2/generation/' + generacion;
-        lista(url, orden);
+        lista(generacion,'generation',orden);
 
     }else if(tipo !== '' && generacion === ''){
-        url = 'https://pokeapi.co/api/v2/type/' + tipo;
-        lista(url, orden)
+        lista(tipo,'type', orden)
 
     }else if(tipo !== '' && generacion !== ''){
         listaVarios(tipo, generacion, orden);
@@ -553,24 +541,52 @@ async function consultarListaToApi(){
     
 }
 
-async function lista(url, orden){
+async function lista(extra, busca, orden,  id=0, valor=null ){
     
     try {
+        if (isRequestPending) {
+            return; // Si hay una solicitud pendiente, no hacer nada
+        }
+        isRequestPending = true;
         //pokemones de generacion
-        resultadoGeneracion = await fetch(url);
-        generationPokemones = await resultadoGeneracion.json();
+        url = 'https://pokeapi.co/api/v2/' + busca + '/' + extra 
+        resultado = await fetch(url);
+        generationPokemones = await resultado.json();
         if(url.includes('https://pokeapi.co/api/v2/generation/')){
             group = generationPokemones.pokemon_species
         }else{
             group = (generationPokemones.pokemon).map(objetoExterno => ( objetoExterno.pokemon));
         }
 
+        if(valor === 'next'){
+            const next = document.querySelectorAll('.boton-next');
+            id = next[0].value;
+        }else if(valor === 'preview'){
+            const preview = document.querySelectorAll('.boton-preview');
+            id = preview[0].value;
+        }
+        id2 = (parseInt(id) + 20)
+
         //ordena y obtiene los primeros 20;
         const grupoOrdenado = ordenarGrupo(group, orden)
-        const primeros20 = grupoOrdenado.slice(0,20);
+        const grupo = grupoOrdenado.slice(id,id2);
        
+        times = grupo.length;
+        ajustarDivs(times);
+        mostrarLista(grupo)
 
-        mostrarLista(primeros20, siguientes)
+
+        //conseguir index del pokemon final e inicial
+        let first = grupo[0] ? grupoOrdenado.findIndex(objeto => objeto.name === grupo[0].name) : null;
+        const last = grupo[19] ? grupoOrdenado.findIndex(objeto => objeto.name === grupo[19].name) + 1 : first;
+        if(id !== 0 && first !== 0){
+            //no pasa el 0
+            first -= 20;
+        }
+        
+        //asigna valores al boton del pokemon siguiente o anterior
+        botonesLista(last, first, orden, 'list', busca, extra);
+        isRequestPending = false;
 
     } catch (error) {
         console.log(error)
@@ -578,40 +594,76 @@ async function lista(url, orden){
     
 }
 
-async function listaVarios(tipo, generacion, orden){
-    url = 'https://pokeapi.co/api/v2/type/' + tipo;
-    resultado = await fetch(url)
-    pokemonesTipo = await resultado.json();
+async function listaVarios(newTipo, newGeneracion, orden, id=0, valor=null ){
+    try {
+        if (isRequestPending) {
+            return; // Si hay una solicitud pendiente, no hacer nada
+        }
+        isRequestPending = true;
 
-    url = 'https://pokeapi.co/api/v2/generation/' + generacion;
-    resultado = await fetch(url)
-    pokemonesGeneracion = await resultado.json();
+        const tipo = newTipo;
+        const generacion = newGeneracion;
 
-    const grupoTipo = (pokemonesTipo.pokemon).map(objetoExterno => ( objetoExterno.pokemon));
-    const grupoGeneration = pokemonesGeneracion.pokemon_species;
+        url = 'https://pokeapi.co/api/v2/type/' + tipo;
+        resultado = await fetch(url)
+        pokemonesTipo = await resultado.json();
 
-    const ambosFiltros = obtenerNombresEnComun(grupoTipo, grupoGeneration)
-    let grupo = ordenarGrupo(ambosFiltros, orden)
+        url = 'https://pokeapi.co/api/v2/generation/' + generacion;
+        resultado = await fetch(url)
+        pokemonesGeneracion = await resultado.json();
 
-    grupo = grupo.slice(0,20)
+        const grupoTipo = (pokemonesTipo.pokemon).map(objetoExterno => ( objetoExterno.pokemon));
+        const grupoGeneration = pokemonesGeneracion.pokemon_species;
 
-    mostrarLista(grupo)
+        const ambosFiltros = obtenerNombresEnComun(grupoTipo, grupoGeneration);
+        let ordenados = ordenarGrupo(ambosFiltros, orden);
+        
+        //obtener el valor si se quiere adelantar o ir atras una pagina
+        if(valor === 'next'){
+            const next = document.querySelectorAll('.boton-next');
+            id = next[0].value;
+        }else if(valor === 'preview'){
+            const preview = document.querySelectorAll('.boton-preview');
+            id = preview[0].value;
+        }
 
-    // ambosFiltros.slice(0,20);
+        //asignar valor a id2 para que pueda traer solo los pokemones necesarios
+        id2 = (parseInt(id) + 20)
+        grupo = ordenados.slice( id , id2 );
+        
+        times = grupo.length;
+        ajustarDivs(times);
+        
+        mostrarLista(grupo)
+        
+        //conseguir index del pokemon final e inicial
+        let first = grupo[0] ? ordenados.findIndex(objeto => objeto.name === grupo[0].name) : null;
+        const last = grupo[19] ? ordenados.findIndex(objeto => objeto.name === grupo[19].name) + 1 : first;
+        if(id !== 0 && first !== 0){
+            //no pasa el 0
+            first -= 20;
+        }
+        
+        //asigna valores al boton del pokemon siguiente o anterior
+        botonesLista(last, first, orden, 'varios', tipo, generacion);
+        isRequestPending = false;
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    
 
 
 }
 
 
-async function mainList(orden, grupo = [], id = 0, valor = null){
-    // console.log(orden)
+async function mainList(orden, id = 0, valor = null){
     try {
-        //para que no parezca una funcion recursiva
-        if(isRequestPending){
-            return;
+        if (isRequestPending) {
+            return; // Si hay una solicitud pendiente, no hacer nada
         }
         isRequestPending = true;
-
         //obtener el valor si se quiere adelantar o ir atras una pagina
         if(valor === 'next'){
             const next = document.querySelectorAll('.boton-next');
@@ -627,23 +679,20 @@ async function mainList(orden, grupo = [], id = 0, valor = null){
         ordenados = ordenarGrupo(all, orden)
         grupo = ordenados.slice( id , id2 )
 
-        // console.log(grupo)
-
-        mostrarLista(grupo)
-        
         times = grupo.length;
         ajustarDivs(times);
+        mostrarLista(grupo)
         
         //conseguir index del pokemon final e inicial
-        const last = ordenados.findIndex(objeto => objeto.name === grupo[19].name)+1;
         let first = ordenados.findIndex(objeto => objeto.name === grupo[0].name);
+        const last = grupo[19] ? ordenados.findIndex(objeto => objeto.name === grupo[19].name) + 1 : ordenados.findIndex(objeto => objeto.name === grupo[0].name);
         if(id !== 0 && first !== 0){
             //no pasa el 0
             first -= 20;
         }
         
         //asigna valores al boton del pokemon siguiente o anterior
-        botonesLista(last, first, orden);
+        botonesLista(last, first, orden, 'main');
         isRequestPending = false;
 
     } catch (error) {
@@ -652,35 +701,44 @@ async function mainList(orden, grupo = [], id = 0, valor = null){
     
 }
 
-function botonesLista(siguiente, anterior, orden){
+function botonesLista(siguiente, anterior, order, list,tip = null, genera = null){
     const next = document.querySelectorAll('.boton-next');
     const preview = document.querySelectorAll('.boton-preview');
-    const newOrden = orden;
-    
-   
+    nameLista = list;
+    tipo = tip;
+    generacion = genera;
+    orden = order;
 
     next.forEach(buton => {
         buton.value = siguiente;
         buton.addEventListener('click', function(){
-            if (!isRequestPending) {
-                mainList(newOrden, [], siguiente, 'next');
+            if(!isRequestPending){
+                if(nameLista === 'varios'){
+                    listaVarios(tipo, generacion, orden, siguiente, 'next');
+                }else if(nameLista === 'main'){
+                    mainList(orden, siguiente, 'next');
+                }else if(nameLista === 'list'){
+                    lista(generacion, tipo, orden, siguiente, 'next');
+                }
             }
         });
     });
 
-
-    
     preview.forEach(buton => {
         buton.value = anterior;
-        buton.addEventListener('click', function() {
-            if (!isRequestPending) {
-                mainList(newOrden, [], anterior, 'preview');
+        buton.addEventListener('click', function(){
+            if(!isRequestPending){
+                if(nameLista === 'main'){
+                    mainList(orden, anterior, 'preview');
+                }else if(nameLista === 'varios'){
+                    listaVarios(tipo, generacion, orden, anterior, 'preview');
+                }else if(nameLista === 'list'){
+                    lista(generacion, tipo, orden, anterior, 'preview');
+                }
             }
         });
         
     });
-
-
 }
 
 async function consultaAllPokemones(){
@@ -693,8 +751,6 @@ async function consultaAllPokemones(){
 
 
 function mostrarLista(grupo){
-    
-
     //setTime para que pueda
     setTimeout( async () => {
         
@@ -714,7 +770,6 @@ function mostrarLista(grupo){
             const id = espacio[num].querySelector('.id-pokemon-lista');
             const imagen = espacio[num].querySelector('.imagen-pokemon-lista');
             const Form = espacio[num].querySelectorAll('.boton-valor');
-            // console.log(Form);
     
             Form.forEach(button => {
                 button.value = poke.id

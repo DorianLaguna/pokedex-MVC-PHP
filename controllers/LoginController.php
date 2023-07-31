@@ -128,14 +128,17 @@ class LoginController extends ActiveRecord{
         $alertas = [];
         $correo = '';
 
-        if($_SERVER['REQUEST_METHOD']){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            // Verificar que exista el usuario
             $correo = $_POST['correo'];
             $usuario = Usuario::where('correo', $correo);
-            
+
             if(!empty($usuario)){
+                //generar token para cambio de contraseña
                 $usuario->crearToken();
                 $respuesta = $usuario->guardar();
                 if($respuesta){
+                    //enviar email
                     $email = new Email($usuario->nombre,$usuario->correo, $usuario->token);
                     $email->cambiarPassword();
                     $alertas['exito'][] = 'Check your email. We sent instructions to change your password';
@@ -153,6 +156,7 @@ class LoginController extends ActiveRecord{
 
     public static function changePassword(Router $router){
         $alertas = [];
+        //Conseguir usuario con token
         $token = $_GET['token'];
         $respuesta = Usuario::where('token', $token);
         $allow = true;

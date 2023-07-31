@@ -13,10 +13,9 @@
     align-items: center;
 }
 .formulario{
-    min-height: 20rem;
     width: 100%;
     background-color: v.$blanco;
-    padding: 1rem;
+    padding: 2rem;
     color: v.$negro;
     border-radius: 2rem;
     box-shadow: 0 1rem 1rem;
@@ -39,15 +38,28 @@
 
     input{
         border-radius: .5rem;
+        height: 3rem;
+        font-size: 1rem;
     }
     label{
-        font-size: 1.3rem;
+        font-size: 1rem;
 
+    }
+    @include m.telefono{
+        label{
+            font-size: 1.3rem;
+        }
+        input{
+            font-size: 1.4rem;
+        }
     }
     @include m.tablet{
         label{
             font-size: 1.6rem;
             margin-right: .5rem;
+        }
+        input{
+            font-size: 1.7rem;
         }
     }
 }
