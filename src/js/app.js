@@ -225,7 +225,6 @@ function noPokemon(){
 }
 
 function botonId(id){
-
     //agrega valor del id a los botones de accion
     const boton = document.querySelectorAll('.boton-valor');
     
@@ -244,27 +243,6 @@ function ocultarAlertas(){
 
     }
 }
-
-// function botonesGrupos(){
-//     const boton = document.querySelector('.boton-añadir');
-//     const botonAdd = document.querySelector('.boton-add');
-//     const overlay = document.querySelector('.fondo');
-//     const deten = document.querySelector('.deten');
-
-//     boton.addEventListener('click', function(){
-//         botonAdd.classList.remove('oculta');
-//         overlay.classList.remove('oculta');
-//     });
-    
-//     overlay.addEventListener('click', function(){
-//         botonAdd.classList.add('oculta');
-//         overlay.classList.add('oculta');
-//     })
-
-//     deten.addEventListener('click', (event) => {
-//         event.stopPropagation();
-//       });
-// }
 
 async function ApiGrupos(){
 
@@ -296,9 +274,6 @@ async function ApiGrupos(){
     } catch (error) {
         console.log(error);
     }
-
-    
-
 }
 
 async function mostrarGrupos(grupos) {
@@ -368,14 +343,8 @@ async function mostrarGrupos(grupos) {
 
                 }
             }
-
             gruponumero++;
         }
-        
-        //boton que envia datos a la api
-        
-        
-        
 
     } catch (error) {
         console.error(error);
@@ -651,10 +620,6 @@ async function listaVarios(newTipo, newGeneracion, orden, id=0, valor=null ){
     } catch (error) {
         console.log(error)
     }
-
-    
-
-
 }
 
 
