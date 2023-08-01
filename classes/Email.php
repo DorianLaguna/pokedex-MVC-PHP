@@ -20,15 +20,15 @@ class Email{
     public function enviarConfirmacion(){
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '0adceb5edc9311';
-        $mail->Password = '8e2653f35b8821';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('pokeapi@correo.com');
         $mail->addAddress('pokeapi@correo.com','pokeapi_mvc.com');
-        $mail->Subject = 'Confirma tu cuenta';
+        $mail->Subject = 'Confirm youy account';
 
 
         //set HTML
@@ -38,7 +38,7 @@ class Email{
         <h1>Confirm Account</h1>
         <p>Hi " . $this->nombre . '</p>
         <p>Please, click the next link to confirm your account: </p>
-        <a href="http://localhost:3000/confirmar?token=' . $this->token . '"';
+        <a href="' . $_ENV['APP_URL'] . '/confirmar?token=' . $this->token . '"';
         $contenido .= "
         >Confirm Account</a>
         <p>If you don't request this, you can ignore the message</p>
@@ -54,15 +54,15 @@ class Email{
     public function cambiarPassword(){
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '0adceb5edc9311';
-        $mail->Password = '8e2653f35b8821';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('pokeapi@correo.com');
         $mail->addAddress('pokeapi@correo.com','pokeapi_mvc.com');
-        $mail->Subject = 'Confirma tu cuenta';
+        $mail->Subject = 'Change your password';
 
 
         //set HTML
@@ -72,7 +72,7 @@ class Email{
         <h1>Change Password</h1>
         <p>Hi " . $this->nombre . '</p>
         <p>Please, click the next link to change your password: </p>
-        <a href="http://localhost:3000/change?token=' . $this->token . '"';
+        <a href="' . $_ENV['APP_URL'] . '/change?token=' . $this->token . '"';
         $contenido .= "
         >Change password</a>
         <p>If you don't request this, you can ignore the message</p>

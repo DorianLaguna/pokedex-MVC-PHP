@@ -249,7 +249,7 @@ async function ApiGrupos(){
     try {
 
         //conseguir id Usuario
-        const urlSesion = 'http://localhost:3000/api/sesion';
+        const urlSesion = `${location.origin}/api/sesion`;
         const resSesion = await fetch(urlSesion);
 
         const resultadoSesion = await resSesion.json();
@@ -257,7 +257,7 @@ async function ApiGrupos(){
     
 
         //conseguir grupos de los usuarios
-        const url = 'http://localhost:3000/api/grupos?idUsuario=' + idUsuario;
+        const url = `${location.origin}/api/grupos?idUsuario=` + idUsuario;
         respuesta = await fetch(url,{
             method: 'GET'
         });
