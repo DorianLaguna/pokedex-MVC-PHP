@@ -38,7 +38,7 @@
     
     .busqueda-submit{
         display: block;
-        margin-left: 2rem;
+        margin-left: 1rem;
         &:hover{
             cursor: pointer;
         }
@@ -67,7 +67,7 @@
     a{
         max-width: 100%;
         padding: 1rem 0 0 0;
-        font-size: 3rem;
+        font-size: 2.6rem;
 
         @include m.telefono{
             font-size: 4rem
@@ -185,7 +185,8 @@
     left: 50%;
     transform: translate(-50%, -150%);
     background-color: #fff;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     height: 200px;
     z-index: 10000;
 
@@ -196,6 +197,7 @@
     }
     input{
         z-index: 10001;
+        width: 90%;
         height: 4rem;
         margin-bottom: 1rem;
     }

@@ -36,9 +36,8 @@
     }
 }
 .imagen{
-    display: block;
-    margin: 0 auto;
-    transform: scale(2) translateY(12%);
+    display: flex;
+    justify-content: center;
     img{
         margin-top: 2rem;
     }
